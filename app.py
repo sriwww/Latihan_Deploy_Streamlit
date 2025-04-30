@@ -2,38 +2,36 @@ import streamlit as st
 from data import *
 
 
-def judul():
-#judul dashboard
-    st.title("🏥 Dashboard COVID-19")
-    st.write("Selamat datang di dashborad interaktif untuk menganalisis data COVID-19 di Indonesia")
-
+# === APLIKASI STREAMLIT ===
+st.set_page_config(page_title="Dashboard COVID-19", layout="wide")
 st.sidebar.title("Navigasi")
-menu = st.sidebar.radio("Pilih Halaman",["Home","Halaman Data"])
+menu = st.sidebar.radio("Pilih Halaman", ["Home", "Halaman Data"])
+
+def judul():
+    st.title("\U0001F3E5 Dashboard COVID-19")
+    st.write("Selamat datang di dashboard interaktif untuk menganalisis data COVID-19 di Indonesia.")
 
 if menu == "Home":
     judul()
-    
-    #filtering
     df = load_data()
     year = select_year()
     locations = select_location(df)
     df_filtered = filter_data(df, year, locations)
-    #kolom 1
     kolom1(df_filtered)
     pie_chart1(df_filtered)
     bar_chart1(df_filtered)
     bar_chart2(df_filtered)
-    map_chart(df_filtered)
-    
-    
+    map_chart(df_filtered, year)
+
 elif menu == "Halaman Data":
     judul()
-    year = select_year()
     df = load_data()
+    year = select_year()
     locations = select_location(df)
     df_filtered = filter_data(df, year, locations)
     show_data(df_filtered)
-    
+
+# Footer
 st.markdown(
     """
     <style>
